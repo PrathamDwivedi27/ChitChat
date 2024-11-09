@@ -11,10 +11,10 @@ import Image from "next/image";
 import { signIn } from "next-auth/react";
 import { DialogDescription } from "@radix-ui/react-dialog";
 
-const handleGoogleLogin = async () => {
+const handleLogin = async () => {
   signIn("google", {
     redirect: true,
-    callbackUrl: "/",
+    callbackUrl: "/dashboard",
   });
 };
 
@@ -22,20 +22,19 @@ export default function LoginModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Getting start</Button>
+        <Button>Get Started</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-2xl">Welcome to QuickChat</DialogTitle>
+          <DialogTitle className="text-2xl">Welcome to ChitChat</DialogTitle>
           <DialogDescription>
-            QuickChat makes it effortless to create secure chat links and start
-            conversations in seconds.
+            Connect and communicate instantly with ChitChat! 
           </DialogDescription>
         </DialogHeader>
-        <Button variant="outline" onClick={handleGoogleLogin}>
+        <Button variant="outline" onClick={handleLogin}>
           <Image
             src="/images/google.png"
-            className=" mr-4"
+            className="mr-4"
             width={25}
             height={25}
             alt="google"
