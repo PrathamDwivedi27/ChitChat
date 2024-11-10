@@ -12,6 +12,7 @@ const DashNav = ({name,image}:{name:string,image?:string}) => {
             name={name} image={image}
         />
         
+        
       </div>
     </nav>
   )
