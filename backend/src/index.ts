@@ -35,5 +35,6 @@ app.get("/", (req: Request, res: Response) => {
 // Routes
 app.use("/api",Routes);
 
+
 //ab app ki jagah server.listen karna padega
 server.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
