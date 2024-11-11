@@ -1,42 +1,39 @@
 "use client"
 
 import { getSocket } from "@/lib/socket-config"
-import { useEffect, useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 import {v4 as uuidV4} from 'uuid'
 import { Button } from "../ui/button"
+import ChatSidebar from "./ChatSidebar"
+import ChatNav from "./ChatNav"
+import ChatUserDialog from "./ChatUserDialog"
+import Chats from "./Chats"
 
 
-export default function ChatBase({groupId}:{groupId:string}) {
-    let socket=useMemo(()=>{
-        const socket=getSocket();
-        socket.auth={
-            room:groupId
+export default function ChatBase({group, users,oldMessages}:{group:GroupChatType,users:Array<GroupChatUserType> | [],oldMessages:Array<MessageType> | []}) {
+    
+    const [open, setOpen] = useState(true);
+    const [chatUser, setChatUser] = useState<GroupChatUserType>();
+
+    useEffect(() => {
+        const data = localStorage.getItem(group.id);
+        if (data) {
+          const pData = JSON.parse(data);
+          setChatUser(pData);
         }
-        // connection hone se pehle hum log group id pass kar rhe hai. group id matlab room id
-        return socket.connect();
-    },[])
-
-
-    useEffect(()=>{
-
-        socket.on('message', (data) => {
-            console.log("The socket message is this ",data);
-        });
-
-        return ()=>{
-            socket.close();
-        }
-
-    },[])
-
-    const handleClick=()=>{
-        socket.emit('message', {id:uuidV4(), message:"Hello from client","name":"client"});
-    }
+      }, [group.id]);
 
     return (
-        <div>
-            <h1>Chat Base</h1>
-            <Button onClick={handleClick}>Send Message</Button>
+        <div className="flex">
+            <ChatSidebar users={users}/>
+            <div className="w-full md:w-4/5 bg-gradient-to-b from-gray-50 to-white">
+            {open ? (
+          <ChatUserDialog open={open} setOpen={setOpen} group={group} />
+        ) : (
+          <ChatNav chatGroup={group} users={users} />
+        )}
+        <Chats group={group} chatUser={chatUser} oldMessages={oldMessages}/>
+            </div>
         </div>
     )
 }
