@@ -29,6 +29,8 @@ export default function GroupChatCardMenu({
     toast.success("Link copied successfully!");
   };
 
+  //Lazy loading kiya hai delete aur edit ko kyunki usko user har samay to karega nhi
+
   return (
     <>
       {deleteDialog && (

@@ -12,15 +12,15 @@ export default function GroupChatCard({
 }) {
   return (
     <Card>
-      <CardHeader className="flex-row justify-between items-center ">
+      <CardHeader className="flex-row justify-between items-center p-4">
         <CardTitle className="text-2xl">{group.title}</CardTitle>
         <GroupChatCardMenu user={user} group={group} />
       </CardHeader>
       <CardContent>
         <p>
-          Passcode :-<strong>{group.passcode}</strong>
+          Passcode: <strong>{group.passcode}</strong>
         </p>
-        <p>Created At :-{new Date(group.created_at).toDateString()}</p>
+        <p>Created At: {new Date(group.created_at).toDateString()}</p>
       </CardContent>
     </Card>
   );
